@@ -1,0 +1,32 @@
+.toggle{
+    width: 60px;
+    height: 30px;
+    box-sizing: border-box; /*Чтобы padding-и не влияли*/
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #444 inset; /*внутрення тень*/
+    position: relative; /*чтобы позиционировать дочерние эл.*/
+}
+
+.toggle-switch{
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box; /*Чтобы padding-и не влияли*/
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    position: absolute; /*позиционирование относительно родителя*/
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    transition: 0.5s;
+}
+
+/*проверка, включен ли переключатель*/
+.toggle--checked.toggle{ 
+    background-color: greenyellow;
+}
+
+.toggle--checked .toggle-switch {
+    left: inherit; /*как буд-то бы значение не задавалось*/
+    right: 0; /*перекоючатель прижат вправо*/
+}
