@@ -66,7 +66,7 @@ function setSliderEventListner(node){
         setSliderPointer(scaleNode, pointerNode, percentValue);
         
     })
-    let isMove = false;
+    let isMove = false; // Будет ли слайдер следовать за указателем мыши
     node.querySelector('.slider__pointer').addEventListener('mousedown', () => {
          isMove = true;
     })
@@ -77,8 +77,19 @@ function setSliderEventListner(node){
 
     document.addEventListener('mousemove', (e) => {
         if(isMove){
+            const startValue = node.dataset.minValue ? node.dataset.min : 0;
+            const endValue = node.dataset.maxValue ? node.dataset.max : 100;            
+            const sliderRectPos = node.querySelector('.slider__scale').getBoundingClientRect(); // Объект с текущими координатами слайдера
+            const startX = sliderRectPos.left;
+            const endX = startX + sliderRectPos.width;
             const cursorX = e.pageX;
-            node.querySelector('.slider__pointer').style.left = cursorX + 'px';
+            let persentValue = ((cursorX - startX) * 100) / endX - startX;
+            persentValue = persentValue < startValue ? startValue : persentValue;
+            persentValue = persentValue > endValue ? endValue : persentValue;
+            node.querySelector('.slider__fill').style.width = persentValue + '%';
+            node.querySelector('.slider__input').value = Math.round((endValue - startValue) / 100 * persentValue);
+
+            setSliderPointer(node.querySelector('.slider__scale'), node.querySelector('.slider__pointer'), persentValue);
         }
     })
 }
